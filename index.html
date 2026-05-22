@@ -95,13 +95,13 @@ animation:fadeUp 2s ease;
 
 position:absolute;
 
-top:32%;
+top:26%;
 left:50%;
 
 transform:translate(-50%,-50%);
 
-width:38px;
-height:38px;
+width:30px;
+height:30px;
 
 border-radius:50%;
 
@@ -254,7 +254,7 @@ opacity:0;
 
 transition:2s;
 
-margin-top:270px;
+margin-top:300px;
 
 }
 
@@ -266,7 +266,7 @@ font-size:55px;
 
 opacity:0;
 
-margin-top:20px;
+margin-top:35px;
 
 transition:2s;
 
@@ -657,9 +657,9 @@ tctx.font = "bold 140px Cairo";
 
 tctx.textAlign = "center";
 
-/* مكان رحمة فوق */
+/* رحمة فوق */
 
-tctx.fillText("رحمة",350,120);
+tctx.fillText("رحمة",350,170);
 
 const imageData =
 tctx.getImageData(0,0,700,300).data;
@@ -680,7 +680,7 @@ x:
 (window.innerWidth/2 - 350) + x,
 
 y:
-(window.innerHeight/2 - 320) + y
+(window.innerHeight * 0.08) + y
 
 });
 
@@ -712,19 +712,17 @@ Math.abs(acc.x) +
 Math.abs(acc.y) +
 Math.abs(acc.z);
 
-/* هزة قوية */
-
 if(force > 60){
 
 shaken = true;
 
-/* اختفاء كلمة الهز */
+/* اختفاء النص */
 
 document.getElementById("shakeText").style.opacity = "0";
 
 const points = createShapePoints();
 
-/* النجوم كلها تتجمع */
+/* النجوم تتجمع */
 
 stars.forEach((star,index)=>{
 
@@ -758,8 +756,6 @@ clearInterval(move);
 },16);
 
 }else{
-
-/* باقي النجوم تختفي */
 
 let fade = setInterval(()=>{
 
