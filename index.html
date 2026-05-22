@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستثناء</title>
+    <style>
+        /* إعدادات الصفحة والـ Dark Mode */
+        body {
+            margin: 0;
+            background: #050510; /* كحلي غامق جداً يميل للأسود */
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* خلفية النجوم المتحركة */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/><circle cx="200" cy="150" r="1.5" fill="white" opacity="0.5"/><circle cx="100" cy="250" r="1" fill="white" opacity="0.9"/></svg>');
+            animation: twinkle 5s infinite linear;
+            z-index: -1;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        /* تنسيق المشاهد والانتقالات */
+        .scene {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            max-width: 600px;
+            padding: 20px;
+        }
+        .scene.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* تنسيق النص */
+        .text-container {
+            min-height: 120px;
+            font-size: 1.6rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        /* تنسيق الأزرار */
+        .btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+            pointer-events: none; /* غير مفعل حتى يكتمل النص */
+        }
+        .btn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .btn:hover {
+            background: #fff;
+            color: #050510;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        /* تأثير الإضاءة المبهر في المشهد الأخير */
+        .glow-diamond {
+            font-size: 4rem;
+            color: #00e5ff;
+            text-shadow: 0 0 20px #00e5ff, 0 0 40px #00e5ff;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <!-- المشهد الأول -->
+    <div class="scene active" id="scene1">
+        <div class="text-container" id="text1"></div>
+        <button class="btn" id="btn1" onclick="nextScene(1, 2)">كملي الرحلة</button>
+    </div>
+
+    <!-- المشهد الثاني -->
+    <div class="scene" id="scene2">
+        <div class="text-container" id="text2"></div>
+        <button class="btn" id="btn2" onclick="nextScene(2, 3)">اللي بعده</button>
+    </div>
+
+    <!-- المشهد الثالث -->
+    <div class="scene" id="scene3">
+        <div class="text-container" id="text3"></div>
+        <button class="btn" id="btn3" onclick="nextScene(3, 4)">اضغطي هنا</button>
+    </div>
+
+    <!-- المشهد الرابع -->
+    <div class="scene" id="scene4">
+        <div class="glow-diamond">💎</div>
+        <div class="text-container" id="text4"></div>
+        <button class="btn" id="btn4" onclick="alert('وأنا دايماً موجود عشانك!')">رسالة سرية</button>
+    </div>
+
+    <script>
+        // النصوص المخصصة لكل مشهد
+        const scenesData = {
+            1: "في وسط زحمة الأيام، ومواقف كتير بتتلخبط وتتنسي... بيفضل في حاجات معينة مستحيل تتمحي.",
+            2: "أنا ممكن أكون مش فاكر امتى بالظبط أول مرة اتكلمنا، ولا مجمع كل تفاصيل البداية... بس أنا متأكد إن صدفة لعبة (الدخلاء) كانت من أحلى الاستثناءات في حياتي.",
+            3: "الأيام أثبتتلي إن قيمتك مش بتتحسب بالوقت ولا بالتواريخ، قيمتك في الراحة اللي بحسها معاكي. إنتي مش مجرد صاحبة، إنتي المساحة الآمنة اللي بفصل فيها من أي ضغط.",
+            4: "في ناس وجودها بيبقى عابر، وفي ناس وجودها بيبقى غالي جداً... وإنتي غالية جداً. شكراً إنك رحمة."
+        };
+
+        let i = 0;
+        let currentText = "";
+        let elementId = "";
+        let btnId = "";
+        let isTyping = false;
+
+        // وظيفة تأثير الآلة الكاتبة
+        function typeWriter() {
+            if (i < currentText.length) {
+                document.getElementById(elementId).innerHTML += currentText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // سرعة الكتابة
+            } else {
+                document.getElementById(btnId).classList.add("show");
+                isTyping = false;
+            }
+        }
+
+        // تشغيل المشهد وبدء الكتابة
+        function startScene(sceneNum) {
+            if(isTyping) return;
+            isTyping = true;
+            i = 0;
+            elementId = "text" + sceneNum;
+            btnId = "btn" + sceneNum;
+            currentText = scenesData[sceneNum];
+            document.getElementById(elementId).innerHTML = "";
+            document.getElementById(btnId).classList.remove("show");
+            setTimeout(typeWriter, 800); // تأخير بسيط قبل بدء الكتابة
+        }
+
+        // الانتقال من مشهد لآخر بنعومة
+        function nextScene(current, next) {
+            document.getElementById("scene" + current).classList.remove("active");
+            setTimeout(() => {
+                document.getElementById("scene" + next).classList.add("active");
+                startScene(next);
+            }, 1000); // انتظار حتى يختفي المشهد القديم
+        }
+
+        // بدء المشهد الأول تلقائياً عند فتح الصفحة
+        window.onload = () => startScene(1);
+    </script>
+</body>
+</html>
