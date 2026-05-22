@@ -1,326 +1,501 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>رحمة</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحمة</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Cairo',sans-serif;
-    }
+<style>
 
-    body{
-      background:#050816;
-      overflow:hidden;
-      color:white;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+scroll-behavior:smooth;
+}
 
-    canvas{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-    }
+body{
+background:#020617;
+overflow-x:hidden;
+color:white;
+}
 
-    .container{
-      width:100%;
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:20px;
-      position:relative;
-    }
+/* النجوم */
 
-    .scene{
-      display:none;
-      max-width:800px;
-      animation:fade 1.5s ease;
-    }
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-2;
+}
 
-    .active{
-      display:block;
-    }
+/* كل مشهد */
 
-    h1{
-      font-size:70px;
-      color:#fff;
-      text-shadow:
-      0 0 10px #6ea8fe,
-      0 0 20px #6ea8fe,
-      0 0 40px #6ea8fe;
-      margin-bottom:25px;
-    }
+section{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+position:relative;
+overflow:hidden;
+padding:20px;
+text-align:center;
+}
 
-    p{
-      font-size:28px;
-      line-height:2;
-      color:#e5e7eb;
-      min-height:120px;
-    }
+/* النص */
 
-    button{
-      margin-top:40px;
-      padding:15px 35px;
-      border:none;
-      border-radius:40px;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(10px);
-      color:white;
-      font-size:20px;
-      cursor:pointer;
-      transition:.4s;
-      border:1px solid rgba(255,255,255,.15);
-      box-shadow:0 0 15px rgba(110,168,254,.3);
-    }
+.text{
+font-size:38px;
+line-height:2;
+max-width:900px;
+text-shadow:0 0 15px rgba(255,255,255,.4);
+opacity:0;
+transform:translateY(30px);
+transition:2s;
+}
 
-    button:hover{
-      transform:scale(1.07);
-      background:#6ea8fe;
-      box-shadow:0 0 25px #6ea8fe;
-    }
+.text.show{
+opacity:1;
+transform:translateY(0);
+}
 
-    .heart{
-      font-size:90px;
-      animation:pulse 2s infinite;
-      margin-bottom:20px;
-      text-shadow:0 0 25px #fff;
-    }
+/* النجمة الثابتة */
 
-    .secretBox{
-      display:none;
-      margin-top:35px;
-      padding:30px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.15);
-      border-radius:25px;
-      backdrop-filter:blur(15px);
-      animation:fade 1s ease;
-    }
+.fixed-star{
+position:absolute;
+width:12px;
+height:12px;
+border-radius:50%;
+background:white;
+box-shadow:
+0 0 20px white,
+0 0 50px #60a5fa,
+0 0 100px #60a5fa;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:pulse 3s infinite;
+z-index:1;
+}
 
-    .secretBox p{
-      font-size:24px;
-      line-height:2;
-    }
+/* المشهد التاني */
 
-    @keyframes fade{
-      from{
-        opacity:0;
-        transform:translateY(30px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
+.big-star{
+position:absolute;
+width:180px;
+height:180px;
+border-radius:50%;
+background:white;
+box-shadow:
+0 0 40px white,
+0 0 100px #60a5fa,
+0 0 180px #60a5fa;
+animation:pulse 4s infinite;
+}
 
-    @keyframes pulse{
-      0%{
-        transform:scale(1);
-      }
-      50%{
-        transform:scale(1.08);
-      }
-      100%{
-        transform:scale(1);
-      }
-    }
+/* المدار */
 
-    @media(max-width:768px){
+.orbit{
+position:absolute;
+width:350px;
+height:350px;
+border:1px solid rgba(255,255,255,.15);
+border-radius:50%;
+animation:rotate 12s linear infinite;
+}
 
-      h1{
-        font-size:50px;
-      }
+.small-planet{
+position:absolute;
+width:18px;
+height:18px;
+border-radius:50%;
+background:#93c5fd;
+top:-9px;
+left:50%;
+transform:translateX(-50%);
+box-shadow:
+0 0 20px #93c5fd,
+0 0 40px #93c5fd;
+}
 
-      p{
-        font-size:22px;
-      }
+/* المشهد الثالث */
 
-      button{
-        font-size:18px;
-      }
-    }
+.calm-light{
+position:absolute;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#2563eb55,transparent 70%);
+filter:blur(40px);
+}
 
-  </style>
+/* المشهد الرابع */
+
+.name{
+font-size:110px;
+font-weight:700;
+opacity:0;
+letter-spacing:10px;
+text-shadow:
+0 0 15px white,
+0 0 40px #60a5fa,
+0 0 80px #60a5fa;
+animation:showName 5s forwards;
+animation-delay:2s;
+}
+
+/* القلب */
+
+.final-heart{
+position:absolute;
+bottom:80px;
+font-size:50px;
+opacity:0;
+animation:heartAppear 3s forwards;
+animation-delay:7s;
+}
+
+/* الرسالة السرية */
+
+.secret-btn{
+margin-top:40px;
+padding:15px 35px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.15);
+border-radius:40px;
+color:white;
+font-size:20px;
+cursor:pointer;
+backdrop-filter:blur(10px);
+transition:.4s;
+}
+
+.secret-btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px #60a5fa;
+}
+
+/* الرسالة */
+
+.secret-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:100;
+padding:20px;
+}
+
+.secret-box{
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.15);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:30px;
+max-width:650px;
+text-align:center;
+animation:fadeUp 1.5s ease;
+}
+
+.secret-box p{
+font-size:30px;
+line-height:2.2;
+}
+
+/* أنيميشن */
+
+@keyframes pulse{
+
+0%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+50%{
+transform:translate(-50%,-50%) scale(1.08);
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+}
+
+@keyframes rotate{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+@keyframes showName{
+
+0%{
+opacity:0;
+transform:scale(.5);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+@keyframes heartAppear{
+
+to{
+opacity:1;
+transform:scale(1.2);
+}
+
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* موبايل */
+
+@media(max-width:768px){
+
+.text{
+font-size:25px;
+}
+
+.name{
+font-size:65px;
+}
+
+.orbit{
+width:240px;
+height:240px;
+}
+
+.big-star{
+width:120px;
+height:120px;
+}
+
+.secret-box p{
+font-size:22px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
 <canvas id="stars"></canvas>
 
-<div class="container">
+<!-- المشهد الأول -->
 
-  <!-- المشهد الأول -->
-  <div class="scene active">
-    <h1>رحمة</h1>
+<section>
 
-    <p id="text1"></p>
+<div class="fixed-star"></div>
 
-    <button onclick="nextScene(1)">
-      كملي الرحلة
-    </button>
-  </div>
+<p class="text">
+في وسط زحمة كبيرة...<br>
+كان فيه حاجة ثابتة.
+</p>
 
-  <!-- المشهد الثاني -->
-  <div class="scene">
-    <p id="text2"></p>
+</section>
 
-    <button onclick="nextScene(2)">
-      بعدين؟
-    </button>
-  </div>
+<!-- المشهد الثاني -->
 
-  <!-- المشهد الثالث -->
-  <div class="scene">
-    <p id="text3"></p>
+<section>
 
-    <button onclick="nextScene(3)">
-      كملي
-    </button>
-  </div>
+<div class="orbit">
+<div class="small-planet"></div>
+</div>
 
-  <!-- المشهد الرابع -->
-  <div class="scene">
-    <div class="heart">🤍</div>
+<div class="big-star"></div>
 
-    <p id="text4"></p>
+<p class="text">
+أنا ممكن أكون مش فاكر<br>
+إمتى بالظبط أول مرة اتكلمنا...<br><br>
 
-    <button onclick="showSecret()">
-      رسالة مخفية
-    </button>
+ولا مجمع كل تفاصيل البداية...<br><br>
 
-    <div class="secretBox" id="secretBox">
-      <p>
-        يمكن عشان إنتِ مش شبه حد...<br><br>
+بس أنا متأكد إن صدفة لعبة الدخلاء<br>
+كانت من أحلى الاستثناءات في حياتي.
+</p>
 
-        فالكلام العادي مش بيعرف يوصفك.<br><br>
+</section>
 
-        بس الحقيقة الوحيدة اللي متأكد منها،<br>
-        إنك من الناس اللي وجودهم بيغير الإحساس بكل حاجة حواليهم.<br><br>
+<!-- المشهد الثالث -->
 
-        ومهما قابلت ناس كتير...<br>
-        هيفضل في جزء جوايا رابط الراحة والهدوء بوجودك إنتِ تحديدًا.
-      </p>
-    </div>
+<section>
 
-  </div>
+<div class="calm-light"></div>
+
+<p class="text">
+الأيام أثبتتلي إن قيمتك<br>
+مش بتتحسب بالوقت ولا بالتواريخ...<br><br>
+
+قيمتك في الراحة اللي بحسها معاكي.<br><br>
+
+وجودك...<br>
+بيهدي.
+</p>
+
+</section>
+
+<!-- المشهد الرابع -->
+
+<section>
+
+<h1 class="name">
+رحمة
+</h1>
+
+<p class="text" style="margin-top:50px;">
+في ناس وجودهم بيتنسي...<br>
+وإنتِ لا.
+</p>
+
+<button class="secret-btn" onclick="openSecret()">
+رسالة مخفية
+</button>
+
+<div class="final-heart">
+🤍
+</div>
+
+</section>
+
+<!-- الرسالة -->
+
+<div class="secret-overlay" id="secretOverlay">
+
+<div class="secret-box">
+
+<p>
+يمكن عشان إنتِ مش شبه حد...<br><br>
+
+فإحساسك برضه مش شبه أي حد.<br><br>
+
+بس الحقيقة الوحيدة اللي متأكد منها...<br>
+إن وجودك بيفرق بشكل مستحيل يتوصف.
+</p>
+
+<br>
+
+<button class="secret-btn" onclick="closeSecret()">
+إغلاق
+</button>
+
+</div>
 
 </div>
 
 <script>
 
-  // النجوم
+/* النجوم */
 
-  const canvas = document.getElementById("stars");
-  const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-  let stars = [];
+let stars = [];
 
-  for(let i=0;i<200;i++){
-    stars.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height,
-      r:Math.random()*2,
-      d:Math.random()*1
-    });
-  }
+for(let i = 0; i < 250; i++){
 
-  function drawStars(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*0.5
+});
 
-    ctx.fillStyle="white";
+}
 
-    stars.forEach(star=>{
-      ctx.beginPath();
-      ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
-      ctx.fill();
+function drawStars(){
 
-      star.y += star.d;
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      if(star.y > canvas.height){
-        star.y = 0;
-      }
-    });
+ctx.fillStyle = "white";
 
-    requestAnimationFrame(drawStars);
-  }
+stars.forEach(star=>{
 
-  drawStars();
+ctx.beginPath();
+ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
+ctx.fill();
 
-  // الانتقال بين المشاهد
+star.y += star.d;
 
-  const scenes = document.querySelectorAll(".scene");
+if(star.y > canvas.height){
+star.y = 0;
+}
 
-  function nextScene(index){
+});
 
-    scenes[index-1].classList.remove("active");
-    scenes[index].classList.add("active");
-  }
+requestAnimationFrame(drawStars);
 
-  // الكتابة التدريجية
+}
 
-  function typeWriter(element,text,speed=50){
+drawStars();
 
-    let i = 0;
+/* ظهور الكلام */
 
-    function typing(){
+const texts = document.querySelectorAll('.text');
 
-      if(i < text.length){
+const observer = new IntersectionObserver(entries=>{
 
-        element.innerHTML += text.charAt(i);
-        i++;
+entries.forEach(entry=>{
 
-        setTimeout(typing,speed);
-      }
-    }
+if(entry.isIntersecting){
 
-    typing();
-  }
+entry.target.classList.add('show');
 
-  typeWriter(
-    document.getElementById("text1"),
-    "في وسط زحمة الأيام... ومواقف كتير بتتلخبط وتتنسى... بيفضل في حاجات معينة مستحيل تتمحي."
-  );
+}
 
-  setTimeout(()=>{
-    typeWriter(
-      document.getElementById("text2"),
-      "أنا ممكن أكون مش فاكر إمتى بالظبط أول مرة اتكلمنا... ولا مجمع كل تفاصيل البداية... بس أنا متأكد إن صدفة لعبة الدخلاء كانت من أحلى الاستثناءات في حياتي."
-    );
-  },1000);
+});
 
-  setTimeout(()=>{
-    typeWriter(
-      document.getElementById("text3"),
-      "الأيام أثبتتلي إن قيمة بعض الناس مش بتتقاس بالوقت... قيمتك في الراحة اللي بحسها معاكي... إنتي مش مجرد صاحبة... إنتي أجمل وأجدع صديقة الواحد محظوظ إنه عرفها."
-    );
-  },2000);
+},{threshold:.5});
 
-  setTimeout(()=>{
-    typeWriter(
-      document.getElementById("text4"),
-      "في ناس وجودها بيبقى عابر... وفي ناس وجودها بيبقى غالي جدًا وبيدخل القلب... وإنتِ غالية جدًا."
-    );
-  },3000);
+texts.forEach(text=>{
+observer.observe(text);
+});
 
-  // الرسالة السرية
+/* الرسالة */
 
-  function showSecret(){
+function openSecret(){
 
-    document.getElementById("secretBox").style.display="block";
-  }
+document.getElementById("secretOverlay").style.display = "flex";
+
+}
+
+function closeSecret(){
+
+document.getElementById("secretOverlay").style.display = "none";
+
+}
 
 </script>
 
