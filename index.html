@@ -1,224 +1,190 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رحمة</title>
+<!-- استبدل الـ sections القديمة بالكود ده -->
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<div class="slider">
+
+  <!-- المشهد الأول -->
+  <section class="scene active">
+
+    <div class="fixed-star"></div>
+
+    <p class="text show">
+      في وسط زحمة كبيرة...<br>
+      كان فيه حاجة ثابتة.
+    </p>
+
+    <button class="next-btn" onclick="nextScene()">
+      كملي الرحلة
+    </button>
+
+  </section>
+
+  <!-- المشهد الثاني -->
+  <section class="scene">
+
+    <div class="orbit">
+      <div class="small-planet"></div>
+    </div>
+
+    <!-- النجمة الكبيرة اتصغرت وبقت في الخلف -->
+    <div class="big-star"></div>
+
+    <p class="text">
+      أنا ممكن أكون مش فاكر<br>
+      إمتى بالظبط أول مرة اتكلمنا...<br><br>
+
+      ولا مجمع كل تفاصيل البداية...<br><br>
+
+      بس أنا متأكد إن صدفة لعبة الدخلاء<br>
+      كانت من أحلى الاستثناءات في حياتي.
+    </p>
+
+    <button class="next-btn" onclick="nextScene()">
+      بعدين؟
+    </button>
+
+  </section>
+
+  <!-- المشهد الثالث -->
+  <section class="scene">
+
+    <div class="calm-light"></div>
+
+    <p class="text">
+      الأيام أثبتتلي إن قيمتك<br>
+      مش بتتحسب بالوقت ولا بالتواريخ...<br><br>
+
+      قيمتك في الراحة اللي بحسها معاكي.<br><br>
+
+      وجودك...<br>
+      بيهدي.
+    </p>
+
+    <button class="next-btn" onclick="nextScene()">
+      كملي
+    </button>
+
+  </section>
+
+  <!-- المشهد الرابع -->
+  <section class="scene">
+
+    <h1 class="name">
+      رحمة
+    </h1>
+
+    <p class="text show" style="margin-top:50px;">
+      في ناس وجودهم بيتنسي...<br>
+      وإنتِ لا.
+    </p>
+
+    <button class="secret-btn" onclick="openSecret()">
+      رسالة مخفية
+    </button>
+
+    <div class="final-heart">
+      🤍
+    </div>
+
+  </section>
+
+</div>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Cairo',sans-serif;
-scroll-behavior:smooth;
-}
+/* المشاهد */
 
-body{
-background:#020617;
-overflow-x:hidden;
-color:white;
-}
-
-/* النجوم */
-
-canvas{
-position:fixed;
-top:0;
-left:0;
+.slider{
 width:100%;
-height:100%;
-z-index:-2;
+height:100vh;
+overflow:hidden;
+position:relative;
 }
 
-/* كل مشهد */
-
-section{
-height:100vh;
+.scene{
+position:absolute;
+inset:0;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-position:relative;
-overflow:hidden;
 padding:20px;
-text-align:center;
-}
-
-/* النص */
-
-.text{
-font-size:38px;
-line-height:2;
-max-width:900px;
-text-shadow:0 0 15px rgba(255,255,255,.4);
 opacity:0;
-transform:translateY(30px);
-transition:2s;
+pointer-events:none;
+transform:translateX(100%);
+transition:1.5s;
 }
 
-.text.show{
+.scene.active{
 opacity:1;
-transform:translateY(0);
+pointer-events:auto;
+transform:translateX(0);
 }
 
-/* النجمة الثابتة */
+/* زرار التنقل */
+
+.next-btn{
+margin-top:50px;
+padding:15px 35px;
+border:none;
+border-radius:40px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:20px;
+cursor:pointer;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.15);
+transition:.4s;
+}
+
+.next-btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px #60a5fa;
+}
+
+/* النجمة الأولى */
 
 .fixed-star{
 position:absolute;
-width:12px;
-height:12px;
+width:28px;
+height:28px;
 border-radius:50%;
 background:white;
-box-shadow:
-0 0 20px white,
-0 0 50px #60a5fa,
-0 0 100px #60a5fa;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-animation:pulse 3s infinite;
-z-index:1;
+box-shadow:
+0 0 25px white,
+0 0 60px #60a5fa,
+0 0 120px #60a5fa;
+animation:starPulse 3s infinite;
 }
 
 /* المشهد التاني */
 
 .big-star{
 position:absolute;
-width:180px;
-height:180px;
+width:110px;
+height:110px;
 border-radius:50%;
 background:white;
+opacity:.18;
+z-index:-1;
 box-shadow:
-0 0 40px white,
-0 0 100px #60a5fa,
-0 0 180px #60a5fa;
-animation:pulse 4s infinite;
-}
-
-/* المدار */
-
-.orbit{
-position:absolute;
-width:350px;
-height:350px;
-border:1px solid rgba(255,255,255,.15);
-border-radius:50%;
-animation:rotate 12s linear infinite;
-}
-
-.small-planet{
-position:absolute;
-width:18px;
-height:18px;
-border-radius:50%;
-background:#93c5fd;
-top:-9px;
-left:50%;
-transform:translateX(-50%);
-box-shadow:
-0 0 20px #93c5fd,
-0 0 40px #93c5fd;
-}
-
-/* المشهد الثالث */
-
-.calm-light{
-position:absolute;
-width:500px;
-height:500px;
-background:radial-gradient(circle,#2563eb55,transparent 70%);
-filter:blur(40px);
-}
-
-/* المشهد الرابع */
-
-.name{
-font-size:110px;
-font-weight:700;
-opacity:0;
-letter-spacing:10px;
-text-shadow:
-0 0 15px white,
-0 0 40px #60a5fa,
-0 0 80px #60a5fa;
-animation:showName 5s forwards;
-animation-delay:2s;
-}
-
-/* القلب */
-
-.final-heart{
-position:absolute;
-bottom:80px;
-font-size:50px;
-opacity:0;
-animation:heartAppear 3s forwards;
-animation-delay:7s;
-}
-
-/* الرسالة السرية */
-
-.secret-btn{
-margin-top:40px;
-padding:15px 35px;
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-border-radius:40px;
-color:white;
-font-size:20px;
-cursor:pointer;
-backdrop-filter:blur(10px);
-transition:.4s;
-}
-
-.secret-btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 25px #60a5fa;
-}
-
-/* الرسالة */
-
-.secret-overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:100;
-padding:20px;
-}
-
-.secret-box{
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:30px;
-max-width:650px;
-text-align:center;
-animation:fadeUp 1.5s ease;
-}
-
-.secret-box p{
-font-size:30px;
-line-height:2.2;
+0 0 60px #60a5fa,
+0 0 120px #60a5fa;
+animation:slowPulse 6s infinite;
 }
 
 /* أنيميشن */
 
-@keyframes pulse{
+@keyframes starPulse{
 
 0%{
 transform:translate(-50%,-50%) scale(1);
 }
 
 50%{
-transform:translate(-50%,-50%) scale(1.08);
+transform:translate(-50%,-50%) scale(1.15);
 }
 
 100%{
@@ -227,243 +193,47 @@ transform:translate(-50%,-50%) scale(1);
 
 }
 
-@keyframes rotate{
-
-from{
-transform:rotate(0deg);
-}
-
-to{
-transform:rotate(360deg);
-}
-
-}
-
-@keyframes showName{
+@keyframes slowPulse{
 
 0%{
-opacity:0;
-transform:scale(.5);
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
 }
 
 100%{
-opacity:1;
 transform:scale(1);
 }
 
 }
 
-@keyframes heartAppear{
-
-to{
-opacity:1;
-transform:scale(1.2);
-}
-
-}
-
-@keyframes fadeUp{
-
-from{
-opacity:0;
-transform:translateY(30px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-/* موبايل */
-
-@media(max-width:768px){
-
-.text{
-font-size:25px;
-}
-
-.name{
-font-size:65px;
-}
-
-.orbit{
-width:240px;
-height:240px;
-}
-
-.big-star{
-width:120px;
-height:120px;
-}
-
-.secret-box p{
-font-size:22px;
-}
-
-}
-
 </style>
-</head>
-
-<body>
-
-<canvas id="stars"></canvas>
-
-<!-- المشهد الأول -->
-
-<section>
-
-<div class="fixed-star"></div>
-
-<p class="text">
-في وسط زحمة كبيرة...<br>
-كان فيه حاجة ثابتة.
-</p>
-
-</section>
-
-<!-- المشهد الثاني -->
-
-<section>
-
-<div class="orbit">
-<div class="small-planet"></div>
-</div>
-
-<div class="big-star"></div>
-
-<p class="text">
-أنا ممكن أكون مش فاكر<br>
-إمتى بالظبط أول مرة اتكلمنا...<br><br>
-
-ولا مجمع كل تفاصيل البداية...<br><br>
-
-بس أنا متأكد إن صدفة لعبة الدخلاء<br>
-كانت من أحلى الاستثناءات في حياتي.
-</p>
-
-</section>
-
-<!-- المشهد الثالث -->
-
-<section>
-
-<div class="calm-light"></div>
-
-<p class="text">
-الأيام أثبتتلي إن قيمتك<br>
-مش بتتحسب بالوقت ولا بالتواريخ...<br><br>
-
-قيمتك في الراحة اللي بحسها معاكي.<br><br>
-
-وجودك...<br>
-بيهدي.
-</p>
-
-</section>
-
-<!-- المشهد الرابع -->
-
-<section>
-
-<h1 class="name">
-رحمة
-</h1>
-
-<p class="text" style="margin-top:50px;">
-في ناس وجودهم بيتنسي...<br>
-وإنتِ لا.
-</p>
-
-<button class="secret-btn" onclick="openSecret()">
-رسالة مخفية
-</button>
-
-<div class="final-heart">
-🤍
-</div>
-
-</section>
-
-<!-- الرسالة -->
-
-<div class="secret-overlay" id="secretOverlay">
-
-<div class="secret-box">
-
-<p>
-يمكن عشان إنتِ مش شبه حد...<br><br>
-
-فإحساسك برضه مش شبه أي حد.<br><br>
-
-بس الحقيقة الوحيدة اللي متأكد منها...<br>
-إن وجودك بيفرق بشكل مستحيل يتوصف.
-</p>
-
-<br>
-
-<button class="secret-btn" onclick="closeSecret()">
-إغلاق
-</button>
-
-</div>
-
-</div>
 
 <script>
 
-/* النجوم */
+/* التنقل بين المشاهد */
 
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+const scenes = document.querySelectorAll(".scene");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let currentScene = 0;
 
-let stars = [];
+function nextScene(){
 
-for(let i = 0; i < 250; i++){
+scenes[currentScene].classList.remove("active");
 
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2,
-d:Math.random()*0.5
-});
+currentScene++;
 
+if(currentScene >= scenes.length){
+currentScene = scenes.length - 1;
 }
 
-function drawStars(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle = "white";
-
-stars.forEach(star=>{
-
-ctx.beginPath();
-ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
-ctx.fill();
-
-star.y += star.d;
-
-if(star.y > canvas.height){
-star.y = 0;
-}
-
-});
-
-requestAnimationFrame(drawStars);
+scenes[currentScene].classList.add("active");
 
 }
-
-drawStars();
 
 /* ظهور الكلام */
-
-const texts = document.querySelectorAll('.text');
 
 const observer = new IntersectionObserver(entries=>{
 
@@ -471,33 +241,18 @@ entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
-entry.target.classList.add('show');
+entry.target.classList.add("show");
 
 }
 
 });
 
-},{threshold:.5});
+});
 
-texts.forEach(text=>{
+document.querySelectorAll(".text").forEach(text=>{
+
 observer.observe(text);
+
 });
-
-/* الرسالة */
-
-function openSecret(){
-
-document.getElementById("secretOverlay").style.display = "flex";
-
-}
-
-function closeSecret(){
-
-document.getElementById("secretOverlay").style.display = "none";
-
-}
 
 </script>
-
-</body>
-</html>
