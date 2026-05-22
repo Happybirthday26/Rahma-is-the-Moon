@@ -233,7 +233,7 @@ box-shadow:
 
 position:absolute;
 
-top:18%;
+top:32%;
 
 font-size:22px;
 
@@ -242,26 +242,7 @@ text-shadow:
 
 animation:fadeShake 2s infinite;
 
-}
-
-/* رحمة */
-
-#rahmaTitle{
-
-opacity:0;
-
-font-size:72px;
-
-font-weight:700;
-
-margin-bottom:25px;
-
-transition:2s;
-
-text-shadow:
-0 0 20px white,
-0 0 60px #60a5fa,
-0 0 120px #60a5fa;
+transition:1s;
 
 }
 
@@ -273,6 +254,8 @@ opacity:0;
 
 transition:2s;
 
+margin-top:270px;
+
 }
 
 /* القلب */
@@ -283,7 +266,7 @@ font-size:55px;
 
 opacity:0;
 
-margin-top:25px;
+margin-top:20px;
 
 transition:2s;
 
@@ -417,12 +400,6 @@ font-size:20px;
 
 }
 
-#rahmaTitle{
-
-font-size:62px;
-
-}
-
 }
 
 </style>
@@ -514,12 +491,6 @@ font-size:62px;
 <div class="shake-text" id="shakeText">
 ✨ هزي الموبايل بقوة ✨
 </div>
-
-<!-- رحمة -->
-
-<h1 id="rahmaTitle">
-رحمة
-</h1>
 
 <!-- الكلام -->
 
@@ -686,7 +657,9 @@ tctx.font = "bold 140px Cairo";
 
 tctx.textAlign = "center";
 
-tctx.fillText("رحمة",350,180);
+/* مكان رحمة فوق */
+
+tctx.fillText("رحمة",350,120);
 
 const imageData =
 tctx.getImageData(0,0,700,300).data;
@@ -707,7 +680,7 @@ x:
 (window.innerWidth/2 - 350) + x,
 
 y:
-(window.innerHeight/2 - 200) + y
+(window.innerHeight/2 - 320) + y
 
 });
 
@@ -744,6 +717,8 @@ Math.abs(acc.z);
 if(force > 60){
 
 shaken = true;
+
+/* اختفاء كلمة الهز */
 
 document.getElementById("shakeText").style.opacity = "0";
 
@@ -804,15 +779,7 @@ clearInterval(fade);
 
 });
 
-/* ظهور رحمة */
-
-setTimeout(()=>{
-
-document.getElementById("rahmaTitle").style.opacity = "1";
-
-},2300);
-
-/* ظهور الكلام */
+/* الكلام */
 
 setTimeout(()=>{
 
@@ -820,7 +787,7 @@ document.getElementById("finalText").style.opacity = "1";
 
 },3800);
 
-/* ظهور القلب */
+/* القلب */
 
 setTimeout(()=>{
 
