@@ -1,260 +1,328 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاستثناء</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>رحمة</title>
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #020205;
-            color: #ffffff;
-            font-family: 'Cairo', sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            transition: background-color 2s ease;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        /* حاوية المشاهد */
-        .scene {
-            position: absolute;
-            width: 90%;
-            max-width: 700px;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1.5s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .scene.active {
-            opacity: 1;
-            visibility: visible;
-        }
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Cairo',sans-serif;
+    }
 
-        /* تنسيق النصوص */
-        .text-box {
-            font-size: 1.8rem;
-            line-height: 1.8;
-            min-height: 150px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            margin-bottom: 40px;
-        }
+    body{
+      background:#050816;
+      overflow:hidden;
+      color:white;
+    }
 
-        /* تنسيق الأزرار */
-        .btn {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 35px;
-            font-size: 1.2rem;
-            font-family: 'Cairo', sans-serif;
-            border-radius: 50px;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            pointer-events: none;
-        }
-        .btn.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .btn:hover {
-            background: #fff;
-            color: #020205;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-        }
+    canvas{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:-1;
+    }
 
-        /* --- أنيميشن المشهد الأول: نجمة واحدة --- */
-        .single-star {
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8);
-            margin: 0 auto 40px auto;
-            animation: pulse-star 2s infinite;
-        }
-        @keyframes pulse-star {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
+    .container{
+      width:100%;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
+      position:relative;
+    }
 
-        /* --- أنيميشن المشهد الثاني: شكلين بيقربوا --- */
-        .meeting-shapes {
-            display: flex;
-            justify-content: center;
-            gap: 150px;
-            margin-bottom: 40px;
-        }
-        .shape {
-            width: 20px;
-            height: 20px;
-            background: #00e5ff;
-            border-radius: 50%;
-            box-shadow: 0 0 20px 5px #00e5ff;
-            opacity: 0;
-        }
-        .scene.active .shape.left {
-            animation: slide-right 3s forwards;
-        }
-        .scene.active .shape.right {
-            animation: slide-left 3s forwards;
-        }
-        @keyframes slide-right {
-            0% { transform: translateX(-100px); opacity: 0; }
-            100% { transform: translateX(65px); opacity: 1; }
-        }
-        @keyframes slide-left {
-            0% { transform: translateX(100px); opacity: 0; }
-            100% { transform: translateX(-65px); opacity: 1; }
-        }
+    .scene{
+      display:none;
+      max-width:800px;
+      animation:fade 1.5s ease;
+    }
 
-        /* --- خلفية المشهد الثالث: نجوم كتير --- */
-        .bg-stars {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: transparent;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 2s ease;
-        }
-        .bg-stars.active {
-            opacity: 1;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            animation: move-stars 100s linear infinite;
-        }
-        @keyframes move-stars {
-            from { background-position: 0 0; }
-            to { background-position: -10000px 5000px; }
-        }
+    .active{
+      display:block;
+    }
 
-        /* --- أنيميشن المشهد الرابع: القلب المضيء --- */
-        .glowing-heart {
-            font-size: 5rem;
-            color: #ff3366;
-            text-shadow: 0 0 30px #ff3366, 0 0 60px #ff3366, 0 0 90px #ff3366;
-            margin-bottom: 30px;
-            animation: heartbeat 1.5s infinite;
-        }
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.15); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            60% { transform: scale(1); }
-            100% { transform: scale(1); }
-        }
-    </style>
+    h1{
+      font-size:70px;
+      color:#fff;
+      text-shadow:
+      0 0 10px #6ea8fe,
+      0 0 20px #6ea8fe,
+      0 0 40px #6ea8fe;
+      margin-bottom:25px;
+    }
+
+    p{
+      font-size:28px;
+      line-height:2;
+      color:#e5e7eb;
+      min-height:120px;
+    }
+
+    button{
+      margin-top:40px;
+      padding:15px 35px;
+      border:none;
+      border-radius:40px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(10px);
+      color:white;
+      font-size:20px;
+      cursor:pointer;
+      transition:.4s;
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:0 0 15px rgba(110,168,254,.3);
+    }
+
+    button:hover{
+      transform:scale(1.07);
+      background:#6ea8fe;
+      box-shadow:0 0 25px #6ea8fe;
+    }
+
+    .heart{
+      font-size:90px;
+      animation:pulse 2s infinite;
+      margin-bottom:20px;
+      text-shadow:0 0 25px #fff;
+    }
+
+    .secretBox{
+      display:none;
+      margin-top:35px;
+      padding:30px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:25px;
+      backdrop-filter:blur(15px);
+      animation:fade 1s ease;
+    }
+
+    .secretBox p{
+      font-size:24px;
+      line-height:2;
+    }
+
+    @keyframes fade{
+      from{
+        opacity:0;
+        transform:translateY(30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes pulse{
+      0%{
+        transform:scale(1);
+      }
+      50%{
+        transform:scale(1.08);
+      }
+      100%{
+        transform:scale(1);
+      }
+    }
+
+    @media(max-width:768px){
+
+      h1{
+        font-size:50px;
+      }
+
+      p{
+        font-size:22px;
+      }
+
+      button{
+        font-size:18px;
+      }
+    }
+
+  </style>
 </head>
+
 <body>
 
-    <div class="bg-stars" id="starField"></div>
+<canvas id="stars"></canvas>
 
-    <!-- المشهد الأول -->
-    <div class="scene active" id="scene1">
-        <div class="single-star"></div>
-        <div class="text-box" id="text1"></div>
-        <button class="btn" id="btn1" onclick="goToScene(2)">كملي الرحلة</button>
+<div class="container">
+
+  <!-- المشهد الأول -->
+  <div class="scene active">
+    <h1>رحمة</h1>
+
+    <p id="text1"></p>
+
+    <button onclick="nextScene(1)">
+      كملي الرحلة
+    </button>
+  </div>
+
+  <!-- المشهد الثاني -->
+  <div class="scene">
+    <p id="text2"></p>
+
+    <button onclick="nextScene(2)">
+      بعدين؟
+    </button>
+  </div>
+
+  <!-- المشهد الثالث -->
+  <div class="scene">
+    <p id="text3"></p>
+
+    <button onclick="nextScene(3)">
+      كملي
+    </button>
+  </div>
+
+  <!-- المشهد الرابع -->
+  <div class="scene">
+    <div class="heart">🤍</div>
+
+    <p id="text4"></p>
+
+    <button onclick="showSecret()">
+      رسالة مخفية
+    </button>
+
+    <div class="secretBox" id="secretBox">
+      <p>
+        يمكن عشان إنتِ مش شبه حد...<br><br>
+
+        فالكلام العادي مش بيعرف يوصفك.<br><br>
+
+        بس الحقيقة الوحيدة اللي متأكد منها،<br>
+        إنك من الناس اللي وجودهم بيغير الإحساس بكل حاجة حواليهم.<br><br>
+
+        ومهما قابلت ناس كتير...<br>
+        هيفضل في جزء جوايا رابط الراحة والهدوء بوجودك إنتِ تحديدًا.
+      </p>
     </div>
 
-    <!-- المشهد الثاني -->
-    <div class="scene" id="scene2">
-        <div class="meeting-shapes">
-            <div class="shape left"></div>
-            <div class="shape right"></div>
-        </div>
-        <div class="text-box" id="text2"></div>
-        <button class="btn" id="btn2" onclick="goToScene(3)">اللي بعده</button>
-    </div>
+  </div>
 
-    <!-- المشهد الثالث -->
-    <div class="scene" id="scene3">
-        <div class="text-box" id="text3"></div>
-        <button class="btn" id="btn3" onclick="goToScene(4)">اضغطي هنا</button>
-    </div>
+</div>
 
-    <!-- المشهد الرابع -->
-    <div class="scene" id="scene4">
-        <div class="glowing-heart">❤</div>
-        <div class="text-box" id="text4"></div>
-        <button class="btn" id="btn4" onclick="alert('وأنا دايماً موجود عشانك! 🤍')">رسالة سرية</button>
-    </div>
+<script>
 
-    <script>
-        const texts = {
-            1: "في وسط زحمة الأيام، ومواقف كتير بتتلخبط وتتنسي... بيفضل في حاجات معينة مستحيل تتمحي.",
-            2: "أنا ممكن أكون مش فاكر امتى بالظبط أول مرة اتكلمنا، ولا مجمع كل تفاصيل البداية... بس أنا متأكد إن صدفة لعبة (الدخلاء) كانت من أحلى الاستثناءات في حياتي.",
-            3: "الأيام أثبتتلي إن قيمتك مش بتتحسب بالوقت ولا بالتواريخ، قيمتك في الراحة اللي بحسها معاكي. إنتي مش مجرد صاحبة، إنتي اجمل واجدع صديقه في العالم الواحد محظوظ انه عرفها والشخص اللي بفصل معاها من أي ضغط.",
-            4: "في ناس وجودها بيبقى عابر، وفي ناس وجودها بيبقى غالي جداً وبيدخلو القلب... وإنتي غالية جداً ودخلتي القلب. شكراً إنك رحمة."
-        };
+  // النجوم
 
-        let isTyping = false;
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
 
-        function typeWriter(text, elementId, btnId, speed = 60) {
-            let i = 0;
-            document.getElementById(elementId).innerHTML = "";
-            isTyping = true;
-            
-            function type() {
-                if (i < text.length) {
-                    document.getElementById(elementId).innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    document.getElementById(btnId).classList.add("show");
-                    isTyping = false;
-                }
-            }
-            setTimeout(type, 1000); // تأخير ثانية قبل الكتابة عشان المشهد يظهر
-        }
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-        function goToScene(sceneNumber) {
-            if(isTyping) return;
+  let stars = [];
 
-            // إخفاء كل المشاهد
-            document.querySelectorAll('.scene').forEach(scene => {
-                scene.classList.remove('active');
-            });
+  for(let i=0;i<200;i++){
+    stars.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*2,
+      d:Math.random()*1
+    });
+  }
 
-            // تغييرات الخلفية حسب المشهد
-            if(sceneNumber === 2) {
-                document.body.style.backgroundColor = "#07071a"; // أزرق ليلي غامق
-            } else if (sceneNumber === 3) {
-                document.getElementById('starField').classList.add('active'); // تشغيل النجوم
-            } else if (sceneNumber === 4) {
-                document.body.style.backgroundColor = "#020205"; // نرجع للضلمة عشان القلب ينور
-            }
+  function drawStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-            // إظهار المشهد الجديد وبدء الكتابة
-            setTimeout(() => {
-                document.getElementById('scene' + sceneNumber).classList.add('active');
-                typeWriter(texts[sceneNumber], 'text' + sceneNumber, 'btn' + sceneNumber);
-            }, 1000);
-        }
+    ctx.fillStyle="white";
 
-        // تشغيل المشهد الأول تلقائياً
-        window.onload = () => {
-            typeWriter(texts[1], 'text1', 'btn1');
-        };
-    </script>
+    stars.forEach(star=>{
+      ctx.beginPath();
+      ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
+      ctx.fill();
+
+      star.y += star.d;
+
+      if(star.y > canvas.height){
+        star.y = 0;
+      }
+    });
+
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+
+  // الانتقال بين المشاهد
+
+  const scenes = document.querySelectorAll(".scene");
+
+  function nextScene(index){
+
+    scenes[index-1].classList.remove("active");
+    scenes[index].classList.add("active");
+  }
+
+  // الكتابة التدريجية
+
+  function typeWriter(element,text,speed=50){
+
+    let i = 0;
+
+    function typing(){
+
+      if(i < text.length){
+
+        element.innerHTML += text.charAt(i);
+        i++;
+
+        setTimeout(typing,speed);
+      }
+    }
+
+    typing();
+  }
+
+  typeWriter(
+    document.getElementById("text1"),
+    "في وسط زحمة الأيام... ومواقف كتير بتتلخبط وتتنسى... بيفضل في حاجات معينة مستحيل تتمحي."
+  );
+
+  setTimeout(()=>{
+    typeWriter(
+      document.getElementById("text2"),
+      "أنا ممكن أكون مش فاكر إمتى بالظبط أول مرة اتكلمنا... ولا مجمع كل تفاصيل البداية... بس أنا متأكد إن صدفة لعبة الدخلاء كانت من أحلى الاستثناءات في حياتي."
+    );
+  },1000);
+
+  setTimeout(()=>{
+    typeWriter(
+      document.getElementById("text3"),
+      "الأيام أثبتتلي إن قيمة بعض الناس مش بتتقاس بالوقت... قيمتك في الراحة اللي بحسها معاكي... إنتي مش مجرد صاحبة... إنتي أجمل وأجدع صديقة الواحد محظوظ إنه عرفها."
+    );
+  },2000);
+
+  setTimeout(()=>{
+    typeWriter(
+      document.getElementById("text4"),
+      "في ناس وجودها بيبقى عابر... وفي ناس وجودها بيبقى غالي جدًا وبيدخل القلب... وإنتِ غالية جدًا."
+    );
+  },3000);
+
+  // الرسالة السرية
+
+  function showSecret(){
+
+    document.getElementById("secretBox").style.display="block";
+  }
+
+</script>
+
 </body>
 </html>
- 
