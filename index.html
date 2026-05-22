@@ -25,7 +25,7 @@ background:#020617;
 color:white;
 }
 
-/* النجوم */
+/* الخلفية */
 
 canvas{
 position:fixed;
@@ -33,12 +33,13 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:-2;
+z-index:-1;
 }
 
 /* المشاهد */
 
 .scene{
+
 position:absolute;
 inset:0;
 
@@ -59,12 +60,16 @@ transform:scale(1.08);
 transition:
 opacity 1.5s ease,
 transform 1.5s ease;
+
 }
 
 .scene.active{
+
 opacity:1;
 pointer-events:auto;
+
 transform:scale(1);
+
 }
 
 /* الكلام */
@@ -73,7 +78,7 @@ transform:scale(1);
 
 font-size:23px;
 
-line-height:2.4;
+line-height:2.3;
 
 max-width:320px;
 
@@ -84,7 +89,7 @@ animation:fadeUp 2s ease;
 
 }
 
-/* النجمة الأولى */
+/* النجمة */
 
 .fixed-star{
 
@@ -120,6 +125,8 @@ position:absolute;
 width:95px;
 height:95px;
 
+top:10%;
+
 border-radius:50%;
 
 background:
@@ -129,18 +136,18 @@ box-shadow:
 0 0 25px rgba(255,255,255,.7),
 0 0 50px rgba(96,165,250,.25);
 
-top:10%;
-
-opacity:.9;
-
 }
+
+/* توهج القمر */
 
 .moonGlow{
 
 position:absolute;
 
-width:200px;
-height:200px;
+width:220px;
+height:220px;
+
+top:2%;
 
 border-radius:50%;
 
@@ -151,65 +158,58 @@ transparent 70%);
 
 filter:blur(35px);
 
-top:3%;
-
 }
 
-/* المشهد التالت */
+/* الضوء */
 
 .calmLight{
 
 position:absolute;
 
-width:450px;
-height:450px;
+width:420px;
+height:420px;
 
 background:
-radial-gradient(circle,#2563eb44,transparent 70%);
+radial-gradient(circle,#2563eb33,transparent 70%);
 
 filter:blur(50px);
 
 }
 
-/* اسم رحمة */
+/* الاسم */
 
 .name{
 
-font-size:62px;
-
-margin-top:-40px;
+font-size:70px;
 
 font-weight:700;
+
+opacity:0;
+
+transition:2s;
 
 text-shadow:
 0 0 20px white,
 0 0 60px #60a5fa,
 0 0 120px #60a5fa;
 
-animation:glow 4s infinite alternate;
+}
+
+/* الكلام النهائي */
+
+#finalText{
+
+opacity:0;
+
+transition:2s;
 
 }
 
-/* القلب */
-
-.heart{
-
-position:relative;
-
-margin-top:35px;
-margin-bottom:20px;
-
-font-size:42px;
-
-animation:heartBeat 2s infinite;
-
-}
-
-/* الأزرار */
+/* الزر */
 
 .next-btn{
 
-margin-top:25px;
+margin-top:28px;
 
 padding:14px 30px;
 
@@ -248,7 +248,7 @@ box-shadow:
 position:fixed;
 inset:0;
 
-background:rgba(0,0,0,.88);
+background:rgba(0,0,0,.9);
 
 display:none;
 
@@ -289,19 +289,20 @@ line-height:2.2;
 
 }
 
-/* تنبيه الهز */
+/* الهز */
 
 .shake-text{
 
 position:absolute;
 
-bottom:140px;
+top:18%;
 
-font-size:18px;
+font-size:22px;
 
-opacity:.8;
+text-shadow:
+0 0 15px rgba(255,255,255,.4);
 
-animation:fadeInOut 2s infinite;
+animation:fadeShake 2s infinite;
 
 }
 
@@ -323,43 +324,6 @@ transform:translate(-50%,-50%) scale(1);
 
 }
 
-@keyframes glow{
-
-from{
-
-text-shadow:
-0 0 20px white,
-0 0 60px #60a5fa;
-
-}
-
-to{
-
-text-shadow:
-0 0 30px white,
-0 0 80px #60a5fa,
-0 0 140px #60a5fa;
-
-}
-
-}
-
-@keyframes heartBeat{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.15);
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
 @keyframes fadeUp{
 
 from{
@@ -374,10 +338,10 @@ transform:translateY(0);
 
 }
 
-@keyframes fadeInOut{
+@keyframes fadeShake{
 
 0%{
-opacity:.3;
+opacity:.4;
 }
 
 50%{
@@ -385,7 +349,27 @@ opacity:1;
 }
 
 100%{
-opacity:.3;
+opacity:.4;
+}
+
+}
+
+/* موبايل */
+
+@media(max-width:768px){
+
+.text{
+
+font-size:22px;
+
+line-height:2.2;
+
+}
+
+.name{
+
+font-size:65px;
+
 }
 
 }
@@ -427,7 +411,7 @@ opacity:.3;
 <div class="moonGlow"></div>
 <div class="moon"></div>
 
-<p class="text" style="margin-top:140px;">
+<p class="text" style="margin-top:130px;">
 
 أنا ممكن أكون مش فاكر امتى بالظبط أول مرة اتكلمنا،
 ولا مجمع كل تفاصيل البداية...
@@ -471,17 +455,17 @@ opacity:.3;
 
 <!-- المشهد الرابع -->
 
-<section class="scene" id="finalScene">
+<section class="scene">
 
-<div class="shake-text">
-هزي الموبايل بهدوء ✨
+<div class="shake-text" id="shakeText">
+✨ هزي الموبايل بقوة بسيطة ✨
 </div>
 
-<h1 class="name" id="rahmaName" style="opacity:0;">
+<h1 class="name" id="rahmaName">
 رحمة
 </h1>
 
-<p class="text" id="finalText" style="margin-top:40px; opacity:0;">
+<p class="text" id="finalText">
 
 في ناس وجودها بيبقى عابر،
 وفي ناس وجودها بيبقى غالي جداً وبيدخلو القلب...
@@ -491,10 +475,6 @@ opacity:.3;
 شكراً إنك رحمة.
 
 </p>
-
-<div class="heart">
-🤍
-</div>
 
 <button class="next-btn" id="secretBtn" onclick="openSecret()" style="opacity:0;">
 فيه كلام مخبيّه
@@ -544,18 +524,23 @@ canvas.height = window.innerHeight;
 
 let stars = [];
 
-for(let i = 0; i < 220; i++){
+for(let i = 0; i < 350; i++){
 
 stars.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-r:Math.random()*2,
-d:Math.random()*0.25
+
+tx:0,
+ty:0,
+
+r:Math.random()*2 + .5,
 
 });
 
 }
+
+/* رسم النجوم */
 
 function drawStars(){
 
@@ -577,14 +562,6 @@ Math.PI*2
 
 ctx.fill();
 
-star.y += star.d;
-
-if(star.y > canvas.height){
-
-star.y = 0;
-
-}
-
 });
 
 requestAnimationFrame(drawStars);
@@ -593,7 +570,7 @@ requestAnimationFrame(drawStars);
 
 drawStars();
 
-/* التنقل */
+/* المشاهد */
 
 const scenes = document.querySelectorAll(".scene");
 
@@ -629,7 +606,59 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* هز الموبايل */
+/* تكوين كلمة رحمة */
+
+function createTextPoints(){
+
+const tempCanvas = document.createElement("canvas");
+
+tempCanvas.width = 500;
+tempCanvas.height = 250;
+
+const tctx = tempCanvas.getContext("2d");
+
+tctx.fillStyle = "white";
+
+tctx.font = "bold 120px Cairo";
+
+tctx.textAlign = "center";
+
+tctx.fillText("رحمة",250,150);
+
+const imageData =
+tctx.getImageData(0,0,500,250).data;
+
+let points = [];
+
+for(let y = 0; y < 250; y += 6){
+
+for(let x = 0; x < 500; x += 6){
+
+let index = (y * 500 + x) * 4;
+
+if(imageData[index + 3] > 128){
+
+points.push({
+
+x:
+(window.innerWidth / 2 - 250) + x,
+
+y:
+(window.innerHeight / 2 - 120) + y
+
+});
+
+}
+
+}
+
+}
+
+return points;
+
+}
+
+/* الهزة */
 
 let shaken = false;
 
@@ -637,7 +666,8 @@ window.addEventListener("devicemotion",(event)=>{
 
 if(shaken) return;
 
-let acc = event.accelerationIncludingGravity;
+let acc =
+event.accelerationIncludingGravity;
 
 if(!acc) return;
 
@@ -646,34 +676,76 @@ Math.abs(acc.x) +
 Math.abs(acc.y) +
 Math.abs(acc.z);
 
-if(force > 28){
+/* هزة قوية */
+
+if(force > 42){
 
 shaken = true;
 
-/* النجوم تتحرك */
+document.getElementById("shakeText").style.opacity = "0";
 
-stars.forEach(star=>{
+const points = createTextPoints();
 
-star.x += (Math.random() - .5) * 50;
-star.y += (Math.random() - .5) * 50;
+/* كل النجوم تتجمع */
+
+stars.forEach((star,index)=>{
+
+if(points[index]){
+
+star.tx = points[index].x;
+star.ty = points[index].y;
+
+let startX = star.x;
+let startY = star.y;
+
+let endX = star.tx;
+let endY = star.ty;
+
+let progress = 0;
+
+const interval = setInterval(()=>{
+
+progress += 0.02;
+
+star.x =
+startX + (endX - startX) * progress;
+
+star.y =
+startY + (endY - startY) * progress;
+
+if(progress >= 1){
+
+clearInterval(interval);
+
+}
+
+},16);
+
+}else{
+
+/* النجوم الزيادة تختفي */
+
+star.r = 0;
+
+}
 
 });
 
-/* إظهار الاسم والكلام */
-
-document.getElementById("rahmaName").style.opacity = "1";
+/* ظهور الكلام */
 
 setTimeout(()=>{
 
 document.getElementById("finalText").style.opacity = "1";
 
-},1200);
+},2500);
+
+/* الزر */
 
 setTimeout(()=>{
 
 document.getElementById("secretBtn").style.opacity = "1";
 
-},2200);
+},3800);
 
 }
 
