@@ -142,8 +142,6 @@ box-shadow:
 
 }
 
-/* اسم رحمة على القمر */
-
 .moon-name{
 
 font-size:21px;
@@ -156,8 +154,6 @@ text-shadow:
 0 0 8px rgba(255,255,255,.4);
 
 }
-
-/* توهج القمر */
 
 .moonGlow{
 
@@ -248,6 +244,27 @@ animation:fadeShake 2s infinite;
 
 }
 
+/* رحمة */
+
+#rahmaTitle{
+
+opacity:0;
+
+font-size:72px;
+
+font-weight:700;
+
+margin-bottom:25px;
+
+transition:2s;
+
+text-shadow:
+0 0 20px white,
+0 0 60px #60a5fa,
+0 0 120px #60a5fa;
+
+}
+
 /* الكلام النهائي */
 
 #finalText{
@@ -255,8 +272,6 @@ animation:fadeShake 2s infinite;
 opacity:0;
 
 transition:2s;
-
-margin-top:20px;
 
 }
 
@@ -268,8 +283,7 @@ font-size:55px;
 
 opacity:0;
 
-margin-top:10px;
-margin-bottom:20px;
+margin-top:25px;
 
 transition:2s;
 
@@ -403,6 +417,12 @@ font-size:20px;
 
 }
 
+#rahmaTitle{
+
+font-size:62px;
+
+}
+
 }
 
 </style>
@@ -495,9 +515,13 @@ font-size:20px;
 ✨ هزي الموبايل بقوة ✨
 </div>
 
-<div id="heartEmoji">
-🤍
-</div>
+<!-- رحمة -->
+
+<h1 id="rahmaTitle">
+رحمة
+</h1>
+
+<!-- الكلام -->
 
 <p class="text" id="finalText">
 
@@ -509,6 +533,12 @@ font-size:20px;
 شكراً إنك رحمة.
 
 </p>
+
+<!-- القلب -->
+
+<div id="heartEmoji">
+🤍
+</div>
 
 <button class="next-btn" id="secretBtn" onclick="openSecret()">
 فيه كلام مخبيّه
@@ -639,7 +669,7 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* شكل رحمة */
+/* شكل كلمة رحمة */
 
 function createShapePoints(){
 
@@ -677,7 +707,7 @@ x:
 (window.innerWidth/2 - 350) + x,
 
 y:
-(window.innerHeight/2 - 180) + y
+(window.innerHeight/2 - 200) + y
 
 });
 
@@ -774,21 +804,29 @@ clearInterval(fade);
 
 });
 
-/* القلب */
+/* ظهور رحمة */
 
 setTimeout(()=>{
 
-document.getElementById("heartEmoji").style.opacity = "1";
+document.getElementById("rahmaTitle").style.opacity = "1";
 
-},2400);
+},2300);
 
-/* الكلام */
+/* ظهور الكلام */
 
 setTimeout(()=>{
 
 document.getElementById("finalText").style.opacity = "1";
 
-},3300);
+},3800);
+
+/* ظهور القلب */
+
+setTimeout(()=>{
+
+document.getElementById("heartEmoji").style.opacity = "1";
+
+},5600);
 
 /* الزر */
 
@@ -796,7 +834,7 @@ setTimeout(()=>{
 
 document.getElementById("secretBtn").style.opacity = "1";
 
-},4300);
+},6500);
 
 }
 
