@@ -93,9 +93,9 @@ animation:fadeUp 2s ease;
 
 position:absolute;
 
-/* النجمة اترفعت لفوق عشان متغطيش الكلام */
+/* رجعت زي ما كانت في كودك الأولاني بالظبط */
 
-top:10%;
+top:23%;
 
 left:50%;
 
@@ -250,12 +250,10 @@ transition:1s;
 
 }
 
-/* الحاوية الجديدة اللي بتعزل الكلام عن كلمة رحمة
-  بتبدأ من نص الشاشة بالظبط عشان حرف الراء ما يطولهاش 
-*/
+/* حاوية الكلام النهائي مفصولة تماماً عشان متخبطش في الكلمة */
 .final-content {
     position: absolute;
-    top: 50%; 
+    top: 55%; /* بتبدأ من تحت النص بشوية */
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -276,7 +274,6 @@ max-width:340px;
 
 text-align:center;
 
-/* شيلنا ال margin-top عشان هو معتمد على ال container الجديد */
 margin: 0;
 
 }
@@ -602,7 +599,6 @@ if(!shaken) {
     star.x += star.vx;
     star.y += star.vy;
 
-    // لما النجمة تخرج بره الشاشة ترجع من الناحية التانية
     if(star.x < 0) star.x = canvas.width;
     if(star.x > canvas.width) star.x = 0;
     if(star.y < 0) star.y = canvas.height;
@@ -665,50 +661,51 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* تكوين كلمة رحمة */
+/* تكوين كلمة رحمة بالطريقة المضمونة */
 
 function createShapePoints(){
 
 const tempCanvas = document.createElement("canvas");
 
-// نخلي الكانفاس المؤقت بنفس مقاس الشاشة عشان يتسنتر صح
-tempCanvas.width = window.innerWidth;
-tempCanvas.height = window.innerHeight;
+// مقاس ثابت للكانفاس عشان الكلمة متتلخبطش أبداً
+tempCanvas.width = 600;
+tempCanvas.height = 300;
 
 const tctx = tempCanvas.getContext("2d");
 
 tctx.fillStyle = "white";
 
-// تصغير الخط شوية في الموبايل عشان الكلمة متتقصش
-let fontSize = window.innerWidth < 500 ? 110 : 150;
+let fontSize = window.innerWidth < 500 ? 120 : 150;
 tctx.font = "bold " + fontSize + "px Cairo";
 
 tctx.textAlign = "center";
 tctx.textBaseline = "middle";
 
-// رفعنا الكلمة فوق جداً (في أول 20% من الشاشة) عشان تفضل بعيدة عن الكلام النهائي
-let textX = window.innerWidth / 2;
-let textY = window.innerHeight * 0.20; 
+// بنرسم الكلمة في نص الكانفاس المؤقت
+tctx.fillText("رحمة", 300, 150);
 
-tctx.fillText("رحمة", textX, textY);
-
-const imageData = tctx.getImageData(0,0,tempCanvas.width,tempCanvas.height).data;
+const imageData = tctx.getImageData(0,0,600,300).data;
 
 let points = [];
-let step = window.innerWidth < 500 ? 4 : 5; // كثافة النجوم
+let step = window.innerWidth < 500 ? 4 : 5; 
 
-for(let y=0;y<tempCanvas.height;y+=step){
+// هنا بنحسب مكان شاشتك بالظبط عشان ننقل الكلمة ليها في السنتر وفي الثلث الأول من فوق
+let offsetX = (window.innerWidth / 2) - 300;
+let offsetY = (window.innerHeight * 0.20) - 150; 
 
-for(let x=0;x<tempCanvas.width;x+=step){
+for(let y=0;y<300;y+=step){
 
-let index = (y * tempCanvas.width + x) * 4;
+for(let x=0;x<600;x+=step){
+
+let index = (y * 600 + x) * 4;
 
 if(imageData[index + 3] > 128){
 
 points.push({
 
-x: x,
-y: y
+// إضافة الحسابات عشان تظبط بالمللي
+x: x + offsetX,
+y: y + offsetY
 
 });
 
@@ -742,13 +739,9 @@ if(force > 60){
 
 shaken = true;
 
-/* اختفاء النص بتاع الهز */
-
 document.getElementById("shakeText").style.display = "none";
 
 const points = createShapePoints();
-
-/* النجوم تتجمع */
 
 stars.forEach((star,index)=>{
 
@@ -783,8 +776,6 @@ clearInterval(move);
 
 }else{
 
-/* النجوم الزيادة تختفي تماماً */
-
 let fade = setInterval(()=>{
 
 star.r -= 0.05;
@@ -792,7 +783,7 @@ star.r -= 0.05;
 if(star.r <= 0){
 
 star.r = 0;
-star.x = -100; // رميها بره الشاشة للتأكيد
+star.x = -100; 
 
 clearInterval(fade);
 
