@@ -32,6 +32,7 @@ left:0;
 width:100%;
 height:100%;
 z-index:-1;
+pointer-events:none;
 }
 
 /* المشاهد */
@@ -87,7 +88,7 @@ animation:fadeUp 2s ease;
 
 }
 
-/* النجمة */
+/* النجمة الكبيرة */
 
 .fixed-star{
 
@@ -148,10 +149,9 @@ font-weight:700;
 
 color:#0f172a;
 
-text-shadow:
-0 0 8px rgba(255,255,255,.4);
-
 }
+
+/* توهج القمر */
 
 .moonGlow{
 
@@ -214,6 +214,8 @@ border:1px solid rgba(255,255,255,.15);
 
 transition:.4s;
 
+z-index:10;
+
 }
 
 .next-btn:hover{
@@ -225,7 +227,7 @@ box-shadow:
 
 }
 
-/* الهز */
+/* هزي الموبايل */
 
 .shake-text{
 
@@ -243,8 +245,6 @@ text-shadow:
 
 animation:fadeShake 2s infinite;
 
-transition:1s;
-
 }
 
 /* الكلام النهائي */
@@ -258,13 +258,11 @@ transition:2s;
 position:absolute;
 
 top:34%;
-
 left:50%;
 
 transform:translateX(-50%);
 
 width:85%;
-
 max-width:340px;
 
 text-align:center;
@@ -349,7 +347,7 @@ line-height:2.2;
 
 }
 
-/* أنيميشن */
+/* الأنيميشن */
 
 @keyframes pulse{
 
@@ -445,7 +443,7 @@ font-size:20px;
 
 </section>
 
-<!-- المشهد التاني -->
+<!-- المشهد الثاني -->
 
 <section class="scene">
 
@@ -472,7 +470,7 @@ font-size:20px;
 
 </section>
 
-<!-- المشهد التالت -->
+<!-- المشهد الثالث -->
 
 <section class="scene">
 
@@ -526,7 +524,7 @@ font-size:20px;
 
 </section>
 
-<!-- الرسالة -->
+<!-- الرسالة السرية -->
 
 <div class="secret-overlay" id="secretOverlay">
 
@@ -575,7 +573,7 @@ stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 
-r:Math.random()*1.8 + .4,
+r:Math.random()*2.2 + .8,
 
 speed:Math.random()*0.6 + 0.2
 
@@ -589,11 +587,13 @@ function drawStars(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle = "white";
+ctx.fillStyle = "rgba(255,255,255,0.95)";
 
 stars.forEach(star=>{
 
-if(!shaken){
+/* الحركة بس في المشهد الرابع */
+
+if(currentScene === 3 && !shaken){
 
 star.y += star.speed;
 
@@ -663,7 +663,7 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* تكوين رحمة */
+/* تكوين كلمة رحمة */
 
 function createShapePoints(){
 
@@ -737,7 +737,7 @@ if(force > 60){
 
 shaken = true;
 
-/* اختفاء النص */
+/* اختفاء هزي الموبايل */
 
 document.getElementById("shakeText").style.display = "none";
 
@@ -796,7 +796,7 @@ clearInterval(fade);
 
 });
 
-/* الكلام */
+/* ظهور الكلام */
 
 setTimeout(()=>{
 
@@ -804,7 +804,7 @@ document.getElementById("finalText").style.opacity = "1";
 
 },3800);
 
-/* القلب */
+/* ظهور القلب */
 
 setTimeout(()=>{
 
@@ -812,7 +812,7 @@ document.getElementById("heartEmoji").style.opacity = "1";
 
 },5600);
 
-/* الزر */
+/* ظهور الزر */
 
 setTimeout(()=>{
 
