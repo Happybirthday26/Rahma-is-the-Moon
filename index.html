@@ -25,7 +25,7 @@ background:#020617;
 color:white;
 }
 
-/* الكانفس */
+/* الخلفية */
 
 canvas{
 position:fixed;
@@ -72,11 +72,11 @@ transform:scale(1);
 
 }
 
-/* النص */
+/* الكلام */
 
 .text{
 
-font-size:23px;
+font-size:22px;
 
 line-height:2.3;
 
@@ -122,12 +122,16 @@ animation:pulse 3s infinite;
 
 position:absolute;
 
-width:95px;
-height:95px;
+width:100px;
+height:100px;
 
 top:10%;
 
 border-radius:50%;
+
+display:flex;
+justify-content:center;
+align-items:center;
 
 background:
 radial-gradient(circle at 30% 30%, #fff, #dbeafe 60%, #93c5fd);
@@ -137,6 +141,23 @@ box-shadow:
 0 0 50px rgba(96,165,250,.25);
 
 }
+
+/* اسم رحمة على القمر */
+
+.moon-name{
+
+font-size:21px;
+
+font-weight:700;
+
+color:#0f172a;
+
+text-shadow:
+0 0 8px rgba(255,255,255,.4);
+
+}
+
+/* توهج القمر */
 
 .moonGlow{
 
@@ -210,6 +231,23 @@ box-shadow:
 
 }
 
+/* الهز */
+
+.shake-text{
+
+position:absolute;
+
+top:18%;
+
+font-size:22px;
+
+text-shadow:
+0 0 15px rgba(255,255,255,.4);
+
+animation:fadeShake 2s infinite;
+
+}
+
 /* الكلام النهائي */
 
 #finalText{
@@ -217,6 +255,27 @@ box-shadow:
 opacity:0;
 
 transition:2s;
+
+margin-top:20px;
+
+}
+
+/* القلب */
+
+#heartEmoji{
+
+font-size:55px;
+
+opacity:0;
+
+margin-top:10px;
+margin-bottom:20px;
+
+transition:2s;
+
+text-shadow:
+0 0 20px white,
+0 0 50px #60a5fa;
 
 }
 
@@ -227,23 +286,6 @@ transition:2s;
 opacity:0;
 
 transition:2s;
-
-}
-
-/* الهز */
-
-.shake-text{
-
-position:absolute;
-
-top:18%;
-
-font-size:24px;
-
-text-shadow:
-0 0 15px rgba(255,255,255,.4);
-
-animation:fadeShake 2s infinite;
 
 }
 
@@ -349,7 +391,7 @@ opacity:.4;
 
 .text{
 
-font-size:22px;
+font-size:21px;
 
 line-height:2.2;
 
@@ -357,7 +399,7 @@ line-height:2.2;
 
 .shake-text{
 
-font-size:21px;
+font-size:20px;
 
 }
 
@@ -398,7 +440,10 @@ font-size:21px;
 <section class="scene">
 
 <div class="moonGlow"></div>
-<div class="moon"></div>
+
+<div class="moon">
+<span class="moon-name">رحمة</span>
+</div>
 
 <p class="text" style="margin-top:130px;">
 
@@ -448,6 +493,10 @@ font-size:21px;
 
 <div class="shake-text" id="shakeText">
 ✨ هزي الموبايل بقوة ✨
+</div>
+
+<div id="heartEmoji">
+🤍
 </div>
 
 <p class="text" id="finalText">
@@ -518,16 +567,13 @@ stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 
-tx:null,
-ty:null,
-
 r:Math.random()*1.8 + .4
 
 });
 
 }
 
-/* الرسم */
+/* رسم النجوم */
 
 function drawStars(){
 
@@ -557,7 +603,7 @@ requestAnimationFrame(drawStars);
 
 drawStars();
 
-/* المشاهد */
+/* التنقل */
 
 const scenes = document.querySelectorAll(".scene");
 
@@ -593,67 +639,31 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* رسم رحمة + قلب */
+/* شكل رحمة */
 
 function createShapePoints(){
 
 const tempCanvas = document.createElement("canvas");
 
 tempCanvas.width = 700;
-tempCanvas.height = 500;
+tempCanvas.height = 300;
 
 const tctx = tempCanvas.getContext("2d");
 
 tctx.fillStyle = "white";
 
-/* رحمة */
-
-tctx.font = "bold 130px Cairo";
+tctx.font = "bold 140px Cairo";
 
 tctx.textAlign = "center";
 
 tctx.fillText("رحمة",350,180);
 
-/* قلب */
-
-tctx.beginPath();
-
-const heartX = 350;
-const heartY = 320;
-const size = 80;
-
-tctx.moveTo(heartX, heartY);
-
-tctx.bezierCurveTo(
-heartX + size,
-heartY - size,
-
-heartX + size * 2,
-heartY + size/2,
-
-heartX,
-heartY + size * 2
-);
-
-tctx.bezierCurveTo(
-heartX - size * 2,
-heartY + size/2,
-
-heartX - size,
-heartY - size,
-
-heartX,
-heartY
-);
-
-tctx.fill();
-
 const imageData =
-tctx.getImageData(0,0,700,500).data;
+tctx.getImageData(0,0,700,300).data;
 
 let points = [];
 
-for(let y=0;y<500;y+=5){
+for(let y=0;y<300;y+=5){
 
 for(let x=0;x<700;x+=5){
 
@@ -667,7 +677,7 @@ x:
 (window.innerWidth/2 - 350) + x,
 
 y:
-(window.innerHeight/2 - 220) + y
+(window.innerHeight/2 - 180) + y
 
 });
 
@@ -701,19 +711,15 @@ Math.abs(acc.z);
 
 /* هزة قوية */
 
-if(force > 55){
+if(force > 60){
 
 shaken = true;
 
-/* اخفاء الكلام */
-
 document.getElementById("shakeText").style.opacity = "0";
-
-/* تحديد شكل الكلام */
 
 const points = createShapePoints();
 
-/* كل النجوم تختفي وتتجمع */
+/* النجوم كلها تتجمع */
 
 stars.forEach((star,index)=>{
 
@@ -736,8 +742,6 @@ startX + (target.x - startX) * progress;
 star.y =
 startY + (target.y - startY) * progress;
 
-/* توهج */
-
 star.r = 2.4;
 
 if(progress >= 1){
@@ -750,7 +754,7 @@ clearInterval(move);
 
 }else{
 
-/* النجوم الزيادة تختفي */
+/* باقي النجوم تختفي */
 
 let fade = setInterval(()=>{
 
@@ -770,13 +774,21 @@ clearInterval(fade);
 
 });
 
+/* القلب */
+
+setTimeout(()=>{
+
+document.getElementById("heartEmoji").style.opacity = "1";
+
+},2400);
+
 /* الكلام */
 
 setTimeout(()=>{
 
 document.getElementById("finalText").style.opacity = "1";
 
-},3200);
+},3300);
 
 /* الزر */
 
@@ -784,7 +796,7 @@ setTimeout(()=>{
 
 document.getElementById("secretBtn").style.opacity = "1";
 
-},4500);
+},4300);
 
 }
 
