@@ -93,25 +93,22 @@ animation:fadeUp 2s ease;
 
 position:absolute;
 
-/* عشان متغطيش على كلمة الأيام */
-
-top:23%;
-
+top:18%;
 left:50%;
 
 transform:translate(-50%,-50%);
 
-width:26px;
-height:26px;
+width:18px;
+height:18px;
 
 border-radius:50%;
 
 background:white;
 
 box-shadow:
-0 0 18px white,
-0 0 50px #60a5fa,
-0 0 100px #60a5fa;
+0 0 15px white,
+0 0 40px #60a5fa,
+0 0 80px #60a5fa;
 
 animation:pulse 3s infinite;
 
@@ -258,18 +255,19 @@ opacity:0;
 
 transition:2s;
 
-/* تحت كلمة رحمة مباشرة */
+position:absolute;
 
-margin-top:150px;
+top:34%;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:85%;
 
 max-width:340px;
 
 text-align:center;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
 
 }
 
@@ -281,7 +279,7 @@ font-size:55px;
 
 opacity:0;
 
-margin-top:20px;
+margin-top:330px;
 
 transition:2s;
 
@@ -298,6 +296,8 @@ text-shadow:
 opacity:0;
 
 transition:2s;
+
+margin-top:20px;
 
 }
 
@@ -404,8 +404,6 @@ opacity:.4;
 font-size:21px;
 
 line-height:2.2;
-
-max-width:330px;
 
 }
 
@@ -577,7 +575,9 @@ stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 
-r:Math.random()*1.8 + .4
+r:Math.random()*1.8 + .4,
+
+speed:Math.random()*0.6 + 0.2
 
 });
 
@@ -592,6 +592,20 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle = "white";
 
 stars.forEach(star=>{
+
+if(!shaken){
+
+star.y += star.speed;
+
+if(star.y > canvas.height){
+
+star.y = 0;
+
+star.x = Math.random() * canvas.width;
+
+}
+
+}
 
 ctx.beginPath();
 
@@ -649,7 +663,7 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* تكوين كلمة رحمة */
+/* تكوين رحمة */
 
 function createShapePoints(){
 
@@ -665,8 +679,6 @@ tctx.fillStyle = "white";
 tctx.font = "bold 140px Cairo";
 
 tctx.textAlign = "center";
-
-/* رحمة فوق خالص */
 
 tctx.fillText("رحمة",350,120);
 
@@ -688,10 +700,8 @@ points.push({
 x:
 (window.innerWidth/2 - 350) + x,
 
-/* فوق في النص */
-
 y:
-(window.innerHeight * -0.02) + y
+(window.innerHeight * 0.05) + y
 
 });
 
