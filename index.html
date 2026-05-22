@@ -250,6 +250,20 @@ transition:1s;
 
 }
 
+/* الحاوية الجديدة اللي بتعزل الكلام عن كلمة رحمة
+  بتبدأ من نص الشاشة بالظبط عشان حرف الراء ما يطولهاش 
+*/
+.final-content {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* الكلام النهائي */
 
 #finalText{
@@ -258,18 +272,12 @@ opacity:0;
 
 transition:2s;
 
-/* المسافة دي بتضمن إن الكلام يكون تحت كلمة رحمة بالظبط */
-
-margin-top:180px;
-
 max-width:340px;
 
 text-align:center;
 
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
+/* شيلنا ال margin-top عشان هو معتمد على ال container الجديد */
+margin: 0;
 
 }
 
@@ -281,7 +289,7 @@ font-size:55px;
 
 opacity:0;
 
-margin-top:20px;
+margin-top:15px;
 
 transition:2s;
 
@@ -298,6 +306,7 @@ text-shadow:
 opacity:0;
 
 transition:2s;
+margin-top: 20px;
 
 }
 
@@ -499,24 +508,23 @@ font-size:20px;
 ✨ هزي الموبايل بقوة ✨
 </div>
 
-<p class="text" id="finalText">
-
-في ناس وجودها بيبقى عابر،
-وفي ناس وجودها بيبقى غالي جداً وبيدخلو القلب...
-<br><br>
-
-وإنتي غالية جداً ودخلتي القلب.
-شكراً إنك رحمة.
-
-</p>
-
-<div id="heartEmoji">
-🤍
+<div class="final-content">
+    <p class="text" id="finalText">
+    في ناس وجودها بيبقى عابر،
+    وفي ناس وجودها بيبقى غالي جداً وبيدخلو القلب...
+    <br><br>
+    وإنتي غالية جداً ودخلتي القلب.
+    شكراً إنك رحمة.
+    </p>
+    
+    <div id="heartEmoji">
+    🤍
+    </div>
+    
+    <button class="next-btn" id="secretBtn" onclick="openSecret()">
+    فيه كلام مخبيّه
+    </button>
 </div>
-
-<button class="next-btn" id="secretBtn" onclick="openSecret()">
-فيه كلام مخبيّه
-</button>
 
 </section>
 
@@ -657,7 +665,7 @@ document.getElementById("secretOverlay").style.display = "none";
 
 }
 
-/* تكوين كلمة رحمة (التعديل الجديد للسنتر) */
+/* تكوين كلمة رحمة */
 
 function createShapePoints(){
 
@@ -678,9 +686,9 @@ tctx.font = "bold " + fontSize + "px Cairo";
 tctx.textAlign = "center";
 tctx.textBaseline = "middle";
 
-// رسم الكلمة في نص الشاشة بالعرض، وفي الثلث الأول من فوق (مكان الدايرة اللي رسمتها)
+// رفعنا الكلمة فوق جداً (في أول 20% من الشاشة) عشان تفضل بعيدة عن الكلام النهائي
 let textX = window.innerWidth / 2;
-let textY = window.innerHeight * 0.25; 
+let textY = window.innerHeight * 0.20; 
 
 tctx.fillText("رحمة", textX, textY);
 
