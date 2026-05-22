@@ -37,209 +37,361 @@ z-index:-1;
 /* المشاهد */
 
 .scene{
+
 position:absolute;
 inset:0;
+
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+
 text-align:center;
+
 padding:25px;
+
 opacity:0;
 pointer-events:none;
+
 transform:scale(1.08);
-transition:opacity 1.5s ease, transform 1.5s ease;
+
+transition:
+opacity 1.5s ease,
+transform 1.5s ease;
+
 }
 
 .scene.active{
+
 opacity:1;
 pointer-events:auto;
+
 transform:scale(1);
+
 }
 
 /* الكلام */
 
 .text{
+
 font-size:22px;
+
 line-height:2.3;
+
 max-width:340px;
-text-shadow:0 0 12px rgba(255,255,255,.25);
+
+text-shadow:
+0 0 12px rgba(255,255,255,.25);
+
 animation:fadeUp 2s ease;
+
 }
 
-/* النجمة الأولى (رجعت لمكانها الأصلي المضبوط) */
+/* النجمة */
 
 .fixed-star{
+
 position:absolute;
+
+/* عشان متغطيش على كلمة الأيام */
+
 top:23%;
+
 left:50%;
+
 transform:translate(-50%,-50%);
+
 width:26px;
 height:26px;
+
 border-radius:50%;
+
 background:white;
-box-shadow:0 0 18px white, 0 0 50px #60a5fa, 0 0 100px #60a5fa;
+
+box-shadow:
+0 0 18px white,
+0 0 50px #60a5fa,
+0 0 100px #60a5fa;
+
 animation:pulse 3s infinite;
+
 }
 
 /* القمر */
 
 .moon{
+
 position:absolute;
+
 width:100px;
 height:100px;
+
 top:10%;
+
 border-radius:50%;
+
 display:flex;
 justify-content:center;
 align-items:center;
-background:radial-gradient(circle at 30% 30%, #fff, #dbeafe 60%, #93c5fd);
-box-shadow:0 0 25px rgba(255,255,255,.7), 0 0 50px rgba(96,165,250,.25);
+
+background:
+radial-gradient(circle at 30% 30%, #fff, #dbeafe 60%, #93c5fd);
+
+box-shadow:
+0 0 25px rgba(255,255,255,.7),
+0 0 50px rgba(96,165,250,.25);
+
 }
 
 .moon-name{
+
 font-size:21px;
+
 font-weight:700;
+
 color:#0f172a;
-text-shadow:0 0 8px rgba(255,255,255,.4);
+
+text-shadow:
+0 0 8px rgba(255,255,255,.4);
+
 }
 
 .moonGlow{
+
 position:absolute;
+
 width:220px;
 height:220px;
+
 top:2%;
+
 border-radius:50%;
-background:radial-gradient(circle, rgba(96,165,250,.12), transparent 70%);
+
+background:
+radial-gradient(circle,
+rgba(96,165,250,.12),
+transparent 70%);
+
 filter:blur(35px);
+
 }
 
 /* الضوء */
 
 .calmLight{
+
 position:absolute;
+
 width:420px;
 height:420px;
-background:radial-gradient(circle,#2563eb33,transparent 70%);
+
+background:
+radial-gradient(circle,#2563eb33,transparent 70%);
+
 filter:blur(50px);
+
 }
 
 /* الأزرار */
 
 .next-btn{
+
 margin-top:28px;
+
 padding:14px 30px;
+
 border:none;
 border-radius:40px;
+
 background:rgba(255,255,255,.08);
+
 backdrop-filter:blur(12px);
+
 color:white;
+
 font-size:18px;
+
 cursor:pointer;
+
 border:1px solid rgba(255,255,255,.15);
+
 transition:.4s;
+
 }
 
 .next-btn:hover{
+
 transform:scale(1.08);
-box-shadow:0 0 20px #60a5fa;
+
+box-shadow:
+0 0 20px #60a5fa;
+
 }
 
 /* الهز */
 
 .shake-text{
+
 position:absolute;
+
 top:45%;
 left:50%;
+
 transform:translateX(-50%);
+
 font-size:22px;
-text-shadow:0 0 15px rgba(255,255,255,.4);
+
+text-shadow:
+0 0 15px rgba(255,255,255,.4);
+
 animation:fadeShake 2s infinite;
+
 transition:1s;
+
 }
 
-/* القلب (منفصل تماماً عشان مايدخلش في الكلمة) */
+/* القلب */
 
 #heartEmoji{
-position: absolute;
-bottom: 12%;
-left: 50%;
-transform: translateX(-50%);
+
 font-size:55px;
+
 opacity:0;
+
+margin-top:20px;
+
 transition:2s;
-text-shadow:0 0 20px white, 0 0 50px #60a5fa;
+
+text-shadow:
+0 0 20px white,
+0 0 50px #60a5fa;
+
 }
 
 /* الزر النهائي */
 
 #secretBtn{
-position: absolute;
-bottom: 4%;
-left: 50%;
-transform: translateX(-50%);
+
 opacity:0;
-pointer-events: none;
+
 transition:2s;
-margin-top: 0;
+
 }
 
-#secretBtn.show {
-opacity: 1;
-pointer-events: auto;
-}
-
-/* الرسالة السرية */
+/* الرسالة */
 
 .secret-overlay{
+
 position:fixed;
 inset:0;
+
 background:rgba(0,0,0,.9);
+
 display:none;
+
 justify-content:center;
 align-items:center;
+
 padding:20px;
+
 z-index:100;
+
 }
 
 .secret-box{
+
 background:rgba(255,255,255,.08);
+
 border:1px solid rgba(255,255,255,.15);
+
 backdrop-filter:blur(20px);
+
 padding:35px;
+
 border-radius:30px;
+
 max-width:700px;
+
 text-align:center;
+
 animation:fadeUp 1.5s ease;
+
 }
 
 .secret-box p{
+
 font-size:21px;
+
 line-height:2.2;
+
 }
 
 /* أنيميشن */
 
 @keyframes pulse{
-0%{transform:translate(-50%,-50%) scale(1);}
-50%{transform:translate(-50%,-50%) scale(1.15);}
-100%{transform:translate(-50%,-50%) scale(1);}
+
+0%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+50%{
+transform:translate(-50%,-50%) scale(1.15);
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
 }
 
 @keyframes fadeUp{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
 }
 
 @keyframes fadeShake{
-0%{opacity:.4;}
-50%{opacity:1;}
-100%{opacity:.4;}
+
+0%{
+opacity:.4;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+opacity:.4;
+}
+
 }
 
 @media(max-width:768px){
-.text{font-size:21px; line-height:2.2; max-width:330px;}
-.shake-text{font-size:20px;}
+
+.text{
+
+font-size:21px;
+
+line-height:2.2;
+
+max-width:330px;
+
+}
+
+.shake-text{
+
+font-size:20px;
+
+}
+
 }
 
 </style>
@@ -251,77 +403,117 @@ to{opacity:1; transform:translateY(0);}
 <canvas id="stars"></canvas>
 
 <section class="scene active">
+
 <div class="fixed-star"></div>
+
 <p class="text">
+
 في وسط زحمة الأيام،
 ومواقف كتير بتتلخبط وتتنسي...
 <br><br>
+
 بيفضل في حاجات معينة مستحيل تتمحي.
+
 </p>
+
 <button class="next-btn" onclick="nextScene()">
 يمكن دي البداية
 </button>
+
 </section>
 
 <section class="scene">
+
 <div class="moonGlow"></div>
+
 <div class="moon">
 <span class="moon-name">رحمة</span>
 </div>
+
 <p class="text" style="margin-top:130px;">
+
 أنا ممكن أكون مش فاكر امتى بالظبط أول مرة اتكلمنا،
 ولا مجمع كل تفاصيل البداية...
 <br><br>
+
 بس أنا متأكد إن صدفة لعبة (الدخلاء)
 كانت من أحلى الاستثناءات في حياتي.
+
 </p>
+
 <button class="next-btn" onclick="nextScene()">
 بس دي مش مجرد صدفة
 </button>
+
 </section>
 
 <section class="scene">
+
 <div class="calmLight"></div>
+
 <p class="text">
+
 الأيام أثبتتلي إن قيمتك مش بتتحسب بالوقت ولا بالتواريخ،
 قيمتك في الراحة اللي بحسها معاكي.
 <br><br>
+
 إنتي مش مجرد صاحبة،
 إنتي اجمل واجدع صديقه في العالم
 الواحد محظوظ انه عرفها
 والشخص اللي بفصل معاها من أي ضغط.
+
 </p>
+
 <button class="next-btn" onclick="nextScene()">
 الراحة ليها شكل
 </button>
+
 </section>
 
 <section class="scene">
+
 <div class="shake-text" id="shakeText">
 ✨ هزي الموبايل بقوة ✨
 </div>
 
-<div id="heartEmoji">🤍</div>
+<div style="height: 55vh;"></div>
+
+<div id="heartEmoji">
+🤍
+</div>
+
 <button class="next-btn" id="secretBtn" onclick="openSecret()">
 فيه كلام مخبيّه
 </button>
+
 </section>
 
 <div class="secret-overlay" id="secretOverlay">
+
 <div class="secret-box">
+
 <p>
+
 يمكن عشان إنتِ مش شبه حد…<br><br>
+
 فالكلام العادي مش بيعرف يوصفك.<br><br>
+
 بس الحقيقة الوحيدة اللي متأكد منها،
 إنك من الناس اللي وجودهم بيغير الإحساس بكل حاجة حواليهم.<br><br>
+
 ومهما قابلت ناس كتير…
 هيفضل في جزء جوايا رابط الراحة والهدوء بوجودك إنتِ تحديدًا.
+
 </p>
+
 <br>
+
 <button class="next-btn" onclick="closeSecret()">
 إغلاق
 </button>
+
 </div>
+
 </div>
 
 <script>
@@ -333,185 +525,266 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 /* النجوم */
+
 let stars = [];
 
-// نبدأ بعدد مناسب من النجوم يعطي شكل جمالي
-for(let i=0;i<1000;i++){
-    stars.push({
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-        r:Math.random()*1.8 + .4,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-    });
+for(let i=0;i<900;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+
+r:Math.random()*1.8 + .4
+
+});
+
 }
 
-let shaken = false;
+/* رسم النجوم */
 
 function drawStars(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "white";
 
-    stars.forEach(star=>{
-        if(!shaken) {
-            star.x += star.vx;
-            star.y += star.vy;
-            if(star.x < 0) star.x = canvas.width;
-            if(star.x > canvas.width) star.x = 0;
-            if(star.y < 0) star.y = canvas.height;
-            if(star.y > canvas.height) star.y = 0;
-        }
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI*2);
-        ctx.fill();
-    });
+ctx.fillStyle = "white";
 
-    requestAnimationFrame(drawStars);
+stars.forEach(star=>{
+
+ctx.beginPath();
+
+ctx.arc(
+star.x,
+star.y,
+star.r,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+});
+
+requestAnimationFrame(drawStars);
+
 }
+
 drawStars();
 
 /* التنقل */
+
 const scenes = document.querySelectorAll(".scene");
+
 let currentScene = 0;
 
 function nextScene(){
-    scenes[currentScene].classList.remove("active");
-    currentScene++;
-    if(currentScene >= scenes.length) currentScene = scenes.length - 1;
-    scenes[currentScene].classList.add("active");
+
+scenes[currentScene].classList.remove("active");
+
+currentScene++;
+
+if(currentScene >= scenes.length){
+
+currentScene = scenes.length - 1;
+
 }
 
+scenes[currentScene].classList.add("active");
+
+}
+
+/* الرسالة */
+
 function openSecret(){
-    document.getElementById("secretOverlay").style.display = "flex";
+
+document.getElementById("secretOverlay").style.display = "flex";
+
 }
 
 function closeSecret(){
-    document.getElementById("secretOverlay").style.display = "none";
+
+document.getElementById("secretOverlay").style.display = "none";
+
 }
 
-/* الدالة العبقرية: رسم الاسم والكلام كله مع بعض بالنجوم */
+/* تكوين كلمة رحمة والكلام كله بالنجوم مرة واحدة */
+
 function createShapePoints(){
-    const tempCanvas = document.createElement("canvas");
-    
-    // مقاس لوحة افتراضي كبير عشان نضمن دقة الخطوط العالية
-    const W = 1000;
-    const H = 1000;
-    tempCanvas.width = W;
-    tempCanvas.height = H;
-    const tctx = tempCanvas.getContext("2d");
 
-    tctx.fillStyle = "white";
-    tctx.textAlign = "center";
-    tctx.textBaseline = "middle";
+const tempCanvas = document.createElement("canvas");
 
-    // رسم كلمة (رحمة) كبيرة
-    tctx.font = "bold 160px Cairo";
-    tctx.fillText("رحمة", W/2, 220);
+// مقاس ثابت وكبير عشان اللوحة كلها تترسم بجودة عالية
+const W = 1000;
+const H = 1000;
 
-    // رسم باقي الكلام بخط أصغر وبمسافات متناسقة جداً
-    tctx.font = "bold 45px Cairo";
-    tctx.fillText("في ناس وجودها بيبقى عابر،", W/2, 420);
-    tctx.fillText("وفي ناس وجودها بيبقى غالي جداً", W/2, 500);
-    tctx.fillText("وبيدخلو القلب...", W/2, 580);
-    
-    tctx.fillText("وإنتي غالية جداً ودخلتي القلب.", W/2, 700);
-    tctx.fillText("شكراً إنك رحمة.", W/2, 780);
+tempCanvas.width = W;
+tempCanvas.height = H;
 
-    const imageData = tctx.getImageData(0,0,W,H).data;
-    let points = [];
-    
-    // كثافة النقط: تقليل الرقم بيزود عدد النجوم وبيخلي الكلام أوضح
-    let step = window.innerWidth < 500 ? 3 : 4; 
+const tctx = tempCanvas.getContext("2d");
 
-    // معادلة تصغير اللوحة عشان تفت في أي شاشة موبايل أو كمبيوتر بنسبة 100%
-    let scale = Math.min(window.innerWidth / W, window.innerHeight / H) * 0.95;
-    
-    let offsetX = window.innerWidth / 2;
-    let offsetY = window.innerHeight / 2;
+tctx.fillStyle = "white";
+tctx.textAlign = "center";
+tctx.textBaseline = "middle";
 
-    for(let y=0; y<H; y+=step){
-        for(let x=0; x<W; x+=step){
-            let index = (y * W + x) * 4;
-            if(imageData[index + 3] > 128){
-                points.push({
-                    // سنترة النقط بدقة ونقلها لشاشة الموبايل
-                    x: offsetX + (x - W/2) * scale,
-                    y: offsetY + (y - H/2) * scale - (window.innerHeight * 0.05) // ترفيعها فوق سنة صغيرة عشان القلب
-                });
-            }
-        }
-    }
-    return points;
+/* رسم كلمة رحمة كبيرة فوق */
+tctx.font = "bold 180px Cairo";
+tctx.fillText("رحمة", W/2, 150);
+
+/* رسم الكلام تحتيها بخط أصغر متناسق جداً */
+tctx.font = "bold 45px Cairo";
+tctx.fillText("في ناس وجودها بيبقى عابر،", W/2, 350);
+tctx.fillText("وفي ناس وجودها بيبقى غالي جداً", W/2, 430);
+tctx.fillText("وبيدخلو القلب...", W/2, 510);
+
+tctx.fillText("وإنتي غالية جداً ودخلتي القلب.", W/2, 650);
+tctx.fillText("شكراً إنك رحمة.", W/2, 730);
+
+const imageData = tctx.getImageData(0,0,W,H).data;
+
+let points = [];
+
+// معادلة تصغير اللوحة عشان تركب على مقاس شاشة الموبايل بالمللي
+let scale = (window.innerWidth / W) * 0.95;
+
+let offsetX = (window.innerWidth - (W * scale)) / 2;
+let offsetY = (window.innerHeight - (H * scale)) / 2;
+
+// بنرفع الكلام شوية عشان القلب ميغطيش عليه
+offsetY -= (window.innerHeight * 0.08);
+
+// كثافة النجوم (5 عشان الكلام يبقى واضح وميهنجش الموبايل)
+let step = 5;
+
+for(let y=0;y<H;y+=step){
+
+for(let x=0;x<W;x+=step){
+
+let index = (y * W + x) * 4;
+
+if(imageData[index + 3] > 128){
+
+points.push({
+x: offsetX + (x * scale),
+y: offsetY + (y * scale)
+});
+
 }
 
-/* حدث الهزة */
+}
+
+}
+
+return points;
+
+}
+
+/* الهزة */
+
+let shaken = false;
+
 window.addEventListener("devicemotion",(event)=>{
-    if(shaken) return;
-    let acc = event.accelerationIncludingGravity;
-    if(!acc) return;
-    
-    let force = Math.abs(acc.x) + Math.abs(acc.y) + Math.abs(acc.z);
-    
-    if(force > 50){ // تقليل الحساسية شوية عشان تستجيب أسرع
-        shaken = true;
-        document.getElementById("shakeText").style.display = "none";
 
-        const points = createShapePoints();
+if(shaken) return;
 
-        // لو النقط المطلوبة لرسم الكلام أكبر من عدد النجوم الموجود، بنخلق نجوم فورية تكفي الكلمة
-        while(stars.length < points.length) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.8 + 0.4,
-                vx: 0,
-                vy: 0
-            });
-        }
+let acc =
+event.accelerationIncludingGravity;
 
-        // تحريك كل نجمة لمكانها في اللوحة الفنية
-        stars.forEach((star,index)=>{
-            if(points[index]){
-                let target = points[index];
-                let startX = star.x;
-                let startY = star.y;
-                let progress = 0;
+if(!acc) return;
 
-                const move = setInterval(()=>{
-                    progress += 0.015;
-                    star.x = startX + (target.x - startX) * progress;
-                    star.y = startY + (target.y - startY) * progress;
-                    
-                    // حجم النجمة بعد التشكيل عشان الحروف تطلع متصلة ومقروءة
-                    star.r = window.innerWidth < 500 ? 1.0 : 1.5; 
+let force =
+Math.abs(acc.x) +
+Math.abs(acc.y) +
+Math.abs(acc.z);
 
-                    if(progress >= 1){
-                        clearInterval(move);
-                    }
-                },16);
-            }else{
-                // النجوم الزيادة بتختفي
-                let fade = setInterval(()=>{
-                    star.r -= 0.05;
-                    if(star.r <= 0){
-                        star.r = 0;
-                        star.x = -100; 
-                        clearInterval(fade);
-                    }
-                },16);
-            }
-        });
+if(force > 60){
 
-        /* ظهور القلب والزرار بعد التشكيل */
-        setTimeout(()=>{
-            document.getElementById("heartEmoji").style.opacity = "1";
-        }, 3000);
+shaken = true;
 
-        setTimeout(()=>{
-            document.getElementById("secretBtn").classList.add("show");
-        }, 4000);
-    }
+/* اختفاء النص */
+
+document.getElementById("shakeText").style.display = "none";
+
+const points = createShapePoints();
+
+/* لو النجوم الأساسية مش مكفية ترسم اللوحة، بنزود نجوم فوراً */
+while(stars.length < points.length) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.8 + .4
+    });
+}
+
+/* النجوم تتجمع وترسم الاسم والكلام */
+
+stars.forEach((star,index)=>{
+
+if(points[index]){
+
+let target = points[index];
+
+let startX = star.x;
+let startY = star.y;
+
+let progress = 0;
+
+const move = setInterval(()=>{
+
+progress += 0.015;
+
+star.x =
+startX + (target.x - startX) * progress;
+
+star.y =
+startY + (target.y - startY) * progress;
+
+// بنصغر حجم النجمة شوية عشان الكلام يبقى متناسق ومقروء
+star.r = 1.2; 
+
+if(progress >= 1){
+
+clearInterval(move);
+
+}
+
+},16);
+
+}else{
+
+let fade = setInterval(()=>{
+
+star.r -= 0.05;
+
+if(star.r <= 0){
+
+star.r = 0;
+
+clearInterval(fade);
+
+}
+
+},16);
+
+}
+
+});
+
+/* ظهور القلب والزرار بعد التشكيل */
+
+setTimeout(()=>{
+
+document.getElementById("heartEmoji").style.opacity = "1";
+
+},4000);
+
+setTimeout(()=>{
+
+document.getElementById("secretBtn").style.opacity = "1";
+
+},5000);
+
+}
+
 });
 
 </script>
